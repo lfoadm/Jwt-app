@@ -1,20 +1,19 @@
-/**
- * main.js
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
-
-// Components
+import { loadFonts } from '@/plugins/webfontloader'
+loadFonts()
 import App from './App.vue'
-
-// Composables
+import './axios'
 import { createApp } from 'vue'
-
-// Plugins
-import { registerPlugins } from '@/plugins'
+import vuetify from '@/plugins/vuetify';
+import router from '@/router';
+import pinia from '@/store';
+import { useAuth } from '@/store/auth';
 
 const app = createApp(App)
+app.use(pinia)
 
-registerPlugins(app)
+const hasTokenStore = useAuth();
+console.log(hasTokenStore.id());
 
+app.use(vuetify)
+app.use(router)
 app.mount('#app')

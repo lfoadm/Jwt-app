@@ -1,5 +1,8 @@
 <template>
-  <HelloWorld />
+  <div>
+    Leandro
+  </div>
+  
 </template>
 
 <script setup>
