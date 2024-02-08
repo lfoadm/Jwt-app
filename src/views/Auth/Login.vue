@@ -6,7 +6,7 @@
                     <v-card rounded="md" elevation="10" class="px-sm-1 px-0 withbg mx-auto" max-width="500">
                         <v-card-item class="pa-sm-8">
                             <div class="d-flex justify-center py-2">
-                                <!-- <Logo /> -->
+                                <Logo />
                             </div>
 
                             <v-alert
@@ -62,10 +62,10 @@
                             </form>
                             <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
                                 Novo aqui?
-                                <!-- <RouterLink :to="{ name: 'register' }"
+                                <RouterLink :to="{ name: 'signup' }"
                                     class="text-indigo-accent-2 text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
                                     <h4>Crie sua conta</h4>
-                                </RouterLink> -->
+                                </RouterLink>
                             </h6>
                         </v-card-item>
                     </v-card>
@@ -83,7 +83,7 @@ import { useForm, useField } from 'vee-validate';
 import { ref } from "vue";
 import * as yup from 'yup';
 import messages from "@/utils/messages";
-// import Logo from '@/components/logo/Logo.vue';
+import Logo from '@/components/logo/Logo.vue';
 
 const errorMessage = ref(null)
 const router = useRouter()
@@ -101,11 +101,10 @@ const { handleSubmit, errors, isSubmitting } = useForm({
 const submit = handleSubmit((values) => {
     errorMessage.value = null
     return authStore.login(values.email, values.password).then(() => {
-        console.log("caiu no login");
-        //router.push({ name: 'dashboard' });
+        router.push({ name: 'dashboard' })
     }).catch((e) => {
         console.log("caiu no erro")
-        //console.log(e.response.data.error);
+        console.log(e);
         errorMessage.value = messages[e.response.data]
     })
 })

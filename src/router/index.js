@@ -29,6 +29,19 @@ const routes = [
     ]
   },
 
+  {
+    path: '/signup',
+    component: () => import('@/layouts/Auth.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/Auth/Signup.vue'),
+        name: 'signup',
+        beforeEnter: redirectIfAuthenticated,
+      }
+    ]
+  },
+
 ]
 
 const router = createRouter({

@@ -11,8 +11,12 @@ import { useAuth } from '@/store/auth';
 const app = createApp(App)
 app.use(pinia)
 
+const Tok = useAuth();
+console.log('token é válido? Resposta: ', Tok.hasToken())
+
 const hasTokenStore = useAuth();
-console.log(hasTokenStore.id());
+console.log('idUser = ', hasTokenStore.id()); //imprime id do usuário autenticado
+
 
 app.use(vuetify)
 app.use(router)
