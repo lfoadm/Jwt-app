@@ -5,9 +5,9 @@
             :width="100"
             aspect-ratio="16/9"
             cover
-            src="../../assets/images/logos/logo-light.png"
             ></v-img>            
         </RouterLink>
+        <!-- src="../../assets/images/logos/logo.png" -->
     </div>
 </template>
 <script setup lang="ts">

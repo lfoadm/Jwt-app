@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import Token from '../helpers/Token';
 import AppStorage from '@/helpers/AppStorage';
+import setAuthHeader from './setAuthHeader';
 
 export const useAuth = defineStore('auth', {
     state: () => ({}),
@@ -26,6 +27,7 @@ export const useAuth = defineStore('auth', {
             const username = response.data.user
             if(Token.isValid(access_token)) {
                 AppStorage.store(username, access_token)
+                setAuthHeader(access_token);
             }
         },
 

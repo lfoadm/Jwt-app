@@ -7,12 +7,28 @@ import vuetify from '@/plugins/vuetify';
 import router from '@/router';
 import pinia from '@/store';
 import { useAuth } from '@/store/auth';
+import { useAuthUserStore } from '@/store/AuthUserStore';
+import setAuthHeader from './store/setAuthHeader'
+// import AppStorage from '@/helpers/AppStorage';
+
+
 
 const app = createApp(App)
 app.use(pinia)
 
-const Tok = useAuth();
-console.log('token é válido? Resposta: ', Tok.hasToken())
+
+if(localStorage.token) {
+    setAuthHeader(localStorage.token);
+} else {
+    setAuthHeader(false);
+};
+
+const authUserStore = useAuthUserStore();
+authUserStore.getAuthUser();
+
+// const Tok = AppStorage;
+// console.log(Tok.getToken())
+
 
 const hasTokenStore = useAuth();
 console.log('idUser = ', hasTokenStore.id()); //imprime id do usuário autenticado
