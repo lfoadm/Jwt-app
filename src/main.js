@@ -10,7 +10,7 @@ import { useAuth } from '@/store/auth';
 import { useAuthUserStore } from '@/store/AuthUserStore';
 import setAuthHeader from './store/setAuthHeader'
 // import AppStorage from '@/helpers/AppStorage';
-
+import { useBalance } from "@/store/balance";
 
 
 const app = createApp(App)
@@ -25,6 +25,9 @@ if(localStorage.token) {
 
 const authUserStore = useAuthUserStore();
 authUserStore.getAuthUser();
+
+const useAmountStore = useBalance();
+useAmountStore.getAmountUser();
 
 // const Tok = AppStorage;
 // console.log(Tok.getToken())

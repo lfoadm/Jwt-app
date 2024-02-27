@@ -19,7 +19,6 @@ export const useAuth = defineStore('auth', {
             .then(response => {
                 this.responseAfterLogin(response)
             })
-            .catch(error => console.log(error.response))
         },
 
         responseAfterLogin(response) {

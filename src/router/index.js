@@ -30,6 +30,45 @@ const routes = [
   },
 
   {
+    path: '/balance',
+    component: () => import('@/layouts/Dashboard.vue'),
+    beforeEnter: auth,
+    children: [
+      {
+        path: '',
+        name: 'balance',
+        component: () => import('@/views/Admin/Site/Balance.vue'),
+      }
+    ]
+  },
+
+  {
+    path: '/deposit/add',
+    component: () => import('@/layouts/Dashboard.vue'),
+    beforeEnter: auth,
+    children: [
+      {
+        path: '',
+        name: 'deposit',
+        component: () => import('@/views/Admin/Site/Deposit.vue'),
+      }
+    ]
+  },
+
+  {
+    path: '/withdraw',
+    component: () => import('@/layouts/Dashboard.vue'),
+    beforeEnter: auth,
+    children: [
+      {
+        path: '',
+        name: 'withdraw',
+        component: () => import('@/views/Admin/Site/Withdraw.vue'),
+      }
+    ]
+  },
+
+  {
     path: '/signup',
     component: () => import('@/layouts/Auth.vue'),
     children: [

@@ -8,6 +8,7 @@ import { useAuthUserStore } from '@/store/AuthUserStore';
 const authUserStore = useAuthUserStore();
 const sidebarDrawer = ref(true);
 </script>
+
 <template>
   <div>
     <v-navigation-drawer
@@ -17,7 +18,7 @@ const sidebarDrawer = ref(true);
       class="leftSidebar"
       v-model="sidebarDrawer"
     >
-      <div class="pa-5">
+      <div class="pa-5 items-center ml-10">
         <Logo />
       </div>
       <div>
@@ -32,12 +33,19 @@ const sidebarDrawer = ref(true);
               <v-list-item-title>Dashboard</v-list-item-title>
             </v-list-item>
             
-            <v-list-item :to="{ name: 'login' }" rounded="xl" class="mb-1" color="primary">
+            <v-list-item :to="{ name: 'balance' }" rounded="xl" class="mb-1" color="primary">
+              <template v-slot:prepend>
+                <v-icon icon="mdi-currency-usd" color="primary" />
+              </template>              
+                <v-list-item-title>Saldo</v-list-item-title>
+            </v-list-item>
+
+            <!-- <v-list-item :to="{ name: 'login' }" rounded="xl" class="mb-1" color="primary">
               <template v-slot:prepend>
                 <v-icon icon="mdi-map-marker-multiple-outline" color="primary" />
               </template>              
                 <v-list-item-title>Meus Locais</v-list-item-title>
-            </v-list-item>
+            </v-list-item> -->
 
           </v-list>
 
@@ -48,7 +56,7 @@ const sidebarDrawer = ref(true);
       </div>
     </v-navigation-drawer>
     
-    <v-app-bar elevation="0" height="70" class="bg-brown-lighten-4">
+    <v-app-bar elevation="0" height="70" color="primary">
       <div class="d-flex align-center justify-space-between w-100">
         <div>
           <v-btn
@@ -62,6 +70,11 @@ const sidebarDrawer = ref(true);
           </v-btn>
         </div>
         <v-spacer></v-spacer>
+        
+        <div class="mx-10 d-flex align-center w-100" v-if="!sidebarDrawer">
+          <Logo />
+        </div>
+
         <div class="profileBtn custom-hover-primary">
           Olá, <strong>{{ authUserStore.user.first_name }}</strong>
         </div>

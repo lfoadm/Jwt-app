@@ -1,3 +1,46 @@
+<script setup>
+import { ref } from 'vue';
+import { useAuth } from '@/store/auth';
+import { useRouter } from 'vue-router';
+import Logo from "@/components/logo/Logo.vue";
+import messages from "@/utils/messages";
+import * as yup from 'yup'
+import { useForm, useField } from 'vee-validate'
+
+const authStore = useAuth();
+const router = useRouter();
+const errorMessage = ref(null)
+
+const schema = yup.object({
+    first_name: yup.string().label('Name'),
+    email: yup.string().required().email().label('E-mail'),
+    password: yup.string().required().min(8).label('Password'),
+});
+
+const { handleSubmit, errors, isSubmitting } = useForm({
+    validationSchema: schema,
+})
+
+const submit = handleSubmit((values) => {
+    errorMessage.value = null
+    return authStore
+    .signup(values.first_name, values.last_name, values.email, values.password)
+    .then(() => { router.push({ name: 'dashboard' }) })
+    .catch((error) => {
+        console.log(error.response.data.error);
+        errorMessage.value = messages[error.response.data.error]
+                        
+    })
+
+})
+
+const { value: firstName } = useField('first_name');
+const { value: lastName } = useField('last_name');
+const { value: email } = useField('email');
+const { value: password } = useField('password');
+
+</script>
+
 <template>
     <div class="authentication mt-9">
         <v-container fluid class="pa-3">
@@ -16,8 +59,7 @@
                                 type="error"
                                 :text="errorMessage"
                                 :icon="false"
-                                class="mb-3 bg-red-200"
-                                color="alert"
+                                class="mb-3"
                             />
                             
                             <form @submit="submit">
@@ -79,7 +121,7 @@
                             <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
                                 Já é cadastrado?
                                 <RouterLink :to="{ name: 'login' }"
-                                    class="text-indigo-accent-2 text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
+                                    class="text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
                                     Login
                                 </RouterLink>
                             </h6>
@@ -90,47 +132,3 @@
         </v-container>
     </div>
 </template>
-  
-<script setup>
-import { ref } from 'vue';
-import { useAuth } from '@/store/auth';
-import { useRouter } from 'vue-router';
-import Logo from "@/components/logo/Logo.vue";
-import messages from "@/utils/messages";
-import * as yup from 'yup'
-import { useForm, useField } from 'vee-validate'
-
-const authStore = useAuth();
-const router = useRouter();
-const errorMessage = ref(null)
-
-const schema = yup.object({
-    first_name: yup.string().label('Name'),
-    email: yup.string().required().email().label('E-mail'),
-    password: yup.string().required().min(8).label('Password'),
-});
-
-const { handleSubmit, errors, isSubmitting } = useForm({
-    validationSchema: schema,
-})
-
-const submit = handleSubmit((values) => {
-    errorMessage.value = null
-    //console.log(values.first_name, values.email, values.password);
-    return authStore.signup(values.first_name, values.last_name, values.email, values.password)
-                    .then(() => {
-        //console.log('aquiiiiiiiiiiiiii');
-        router.push({ name: 'dashboard' });
-    }).catch((e) => {
-        console.log(e);
-        // errorMessage.value = messages[e.response.data.error]
-    })
-
-})
-
-const { value: firstName } = useField('first_name');
-const { value: lastName } = useField('last_name');
-const { value: email } = useField('email');
-const { value: password } = useField('password');
-
-</script>
